@@ -1,0 +1,10 @@
+# SiM Quickshell Core & Rust ignores
+core/venv/
+core/data/sim.db
+**/target/
+*.bin
+*.log
+.env
+.qmlls.ini
+__pycache__/
+*.py[cod]

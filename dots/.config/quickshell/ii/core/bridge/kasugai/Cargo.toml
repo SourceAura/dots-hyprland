@@ -1,0 +1,23 @@
+[package]
+name = "shigurui-kasugai"
+version = "0.2.0"
+edition = "2021"
+description = "Shigurui Kasugai — Headless Tokio Socket Daemon"
+
+[dependencies]
+tokio        = { version = "1", features = ["full"] }
+serde        = { version = "1", features = ["derive"] }
+serde_json   = "1"
+log          = "0.4"
+env_logger   = "0.11"
+rusqlite     = { version = "0.31", features = ["bundled"] }
+anyhow       = "1"
+dirs-next    = "2"
+
+[[bin]]
+name = "manifest_compiler"
+path = "src/manifest_compiler.rs"
+
+[[bin]]
+name = "kasugai"
+path = "src/main.rs"

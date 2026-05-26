@@ -11,6 +11,7 @@ import Qt5Compat.GraphicalEffects
 import Quickshell
 import Quickshell.Io
 
+
 Item {
     id: root
     property real padding: 4
@@ -216,6 +217,7 @@ Inline w/ backslash and round brackets \\(e^{i\\pi} + 1 = 0\\)
         messageListView.positionViewAtEnd();
     }
 
+
     Process {
         id: decodeImageAndAttachProc
         property string imageDecodePath: Directories.cliphistDecode
@@ -282,6 +284,7 @@ Inline w/ backslash and round brackets \\(e^{i\\pi} + 1 = 0\\)
         spacing: root.padding
 
         Item {
+
             // Messages
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -471,6 +474,7 @@ Inline w/ backslash and round brackets \\(e^{i\\pi} + 1 = 0\\)
 
         Rectangle { // Input area
             id: inputWrapper
+
             property real spacing: 5
             Layout.fillWidth: true
             radius: Appearance.rounding.normal - root.padding

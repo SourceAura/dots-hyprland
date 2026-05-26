@@ -214,7 +214,14 @@ Scope { // Scope
         function open(): void {
             GlobalStates.sidebarLeftOpen = true
         }
+
+        function openIntelligence(): void {
+            GlobalStates.sidebarLeftOpen = true
+            root.sidebarContent.switchToIntelligence()
+        }
     }
+
+
 
     GlobalShortcut {
         name: "sidebarLeftToggle"

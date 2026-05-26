@@ -1,0 +1,50 @@
+{
+  "interactions": 9,
+  "chat_history": [
+    {
+      "role": "user",
+      "content": "hello SiM",
+      "ts": "2026-05-24T22:54:59.545642"
+    },
+    {
+      "role": "user",
+      "content": "hello SiM",
+      "ts": "2026-05-24T22:58:07.897119"
+    },
+    {
+      "role": "user",
+      "content": "say hello",
+      "ts": "2026-05-24T23:00:37.773064"
+    },
+    {
+      "role": "user",
+      "content": "hello sim",
+      "ts": "2026-05-24T23:01:56.030106"
+    },
+    {
+      "role": "user",
+      "content": "you can hear me?",
+      "ts": "2026-05-24T23:02:10.019337"
+    },
+    {
+      "role": "user",
+      "content": "awesome!! what model is this ",
+      "ts": "2026-05-24T23:02:33.284362"
+    },
+    {
+      "role": "user",
+      "content": "understood. and you know who i am?",
+      "ts": "2026-05-24T23:03:06.143105"
+    },
+    {
+      "role": "user",
+      "content": "sim are you there?",
+      "ts": "2026-05-24T23:19:06.022897"
+    },
+    {
+      "role": "user",
+      "content": "we're broke we need money SiM",
+      "ts": "2026-05-24T23:19:49.349527"
+    }
+  ]
+}

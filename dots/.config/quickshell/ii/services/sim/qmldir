@@ -1,0 +1,6 @@
+module services.sim
+
+singleton SiMSovereign     1.0 SiMSovereign.qml
+singleton SiMNLU           1.0 SiMNLU.qml
+singleton SiMRunes         1.0 SiMRunes.qml
+singleton TransparentWorld 1.0 TransparentWorld.qml

@@ -1,0 +1,24 @@
+[Unit]
+Description=Shigurui — eBPF Egress Telemetry Bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/shigurui-ebpf
+Restart=on-failure
+RestartSec=5s
+User=root
+Group=root
+AmbientCapabilities=CAP_NET_ADMIN
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/tmp
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=shigurui-ebpf
+
+[Install]
+WantedBy=multi-user.target

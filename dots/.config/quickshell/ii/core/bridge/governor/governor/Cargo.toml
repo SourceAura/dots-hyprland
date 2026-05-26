@@ -1,0 +1,16 @@
+[package]
+name    = "sim-governor"
+version = "1.0.0"
+edition = "2021"
+
+[[bin]]
+name = "sim-governor"
+path = "src/main.rs"
+
+[dependencies]
+tokio        = { version = "1",    features = ["full"] }
+serde        = { version = "1",    features = ["derive"] }
+serde_json   = "1"
+log          = "0.4"
+env_logger   = "0.11"
+anyhow       = "1"

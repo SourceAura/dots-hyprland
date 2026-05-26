@@ -1,0 +1,24 @@
+[package]
+name    = "shigurui-ebpf"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "shigurui-ebpf"
+path = "src/main.rs"
+
+[dependencies]
+aya          = { version = "0.13", features = ["async_tokio"] }
+aya-log      = "0.2"
+tokio        = { version = "1",    features = ["full"] }
+serde        = { version = "1",    features = ["derive"] }
+serde_json   = "1"
+log          = "0.4"
+env_logger   = "0.11"
+anyhow       = "1"
+libc         = "0.2"
+bytes        = "1"
+
+[build-dependencies]
+# eBPF programs are compiled separately with cargo-bpf or bpf-linker.
+# The .o object is embedded at build time.

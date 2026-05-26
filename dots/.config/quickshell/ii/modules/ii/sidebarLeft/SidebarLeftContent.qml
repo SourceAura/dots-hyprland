@@ -27,6 +27,16 @@ Item {
         swipeView.currentItem.forceActiveFocus()
     }
 
+    function switchToIntelligence() {
+        for (var i = 0; i < tabButtonList.length; i++) {
+            if (tabButtonList[i].name === "Intelligence" || tabButtonList[i].name === Translation.tr("Intelligence")) {
+                swipeView.currentIndex = i;
+                break;
+            }
+        }
+    }
+
+
     Keys.onPressed: (event) => {
         if (event.modifiers === Qt.ControlModifier) {
             if (event.key === Qt.Key_PageDown) {

@@ -11,6 +11,7 @@ import qs.services
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.modules.common.functions
+import "../../../services/sim" as SiM
 
 Item { // Wrapper
     id: root
@@ -112,6 +113,11 @@ Item { // Wrapper
         implicitHeight: columnLayout.implicitHeight
         radius: searchBar.height / 2 + searchBar.verticalPadding
         color: Appearance.colors.colBackgroundSurfaceContainer
+
+        border.color: Qt.rgba(SiM.SiMSovereign.prismaticColor.r, SiM.SiMSovereign.prismaticColor.g, SiM.SiMSovereign.prismaticColor.b, searchBar.searchInput.activeFocus ? 0.60 : 0.22)
+        border.width: 1.5
+
+        Behavior on border.color { ColorAnimation { duration: 250 } }
 
         Behavior on implicitHeight {
             id: searchHeightBehavior

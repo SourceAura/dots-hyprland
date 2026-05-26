@@ -9,6 +9,8 @@
 import "modules/common"
 import "services"
 import "panelFamilies"
+import "services/sim" as SiM
+import "modules/sim" as SiMModules
 
 import QtQuick
 import QtQuick.Window
@@ -73,5 +75,31 @@ ShellRoot {
 
         onPressed: root.cyclePanelFamily()
     }
+
+    // ── SiM ROM overlay ──────────────────────────────────────────────────
+    // Loads the active ROM as a WlrLayer.Overlay panel.
+    // Active only when a ROM is open — zero cost otherwise.
+    Loader {
+        id: _simRomLoader
+        active:  SiM.SiMSovereign.activeRom !== ""
+        source:  SiM.SiMSovereign.romPath
+        visible: active
+    }
+
+    // ── SiM IPC Handler ──────────────────────────────────────────────────
+    IpcHandler {
+        target: "SiMSovereign"
+
+        function toggleRom(id: string): void {
+            SiM.SiMSovereign.toggleRom(id)
+        }
+
+        function processCommand(cmd: string): void {
+            SiM.SiMSovereign.processCommand(cmd)
+        }
+    }
 }
+
+
+
 

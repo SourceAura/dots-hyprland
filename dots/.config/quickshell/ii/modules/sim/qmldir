@@ -1,0 +1,7 @@
+module modules.sim
+
+SiMTab           1.0 SiMTab.qml
+SiMCommandBar    1.0 SiMCommandBar.qml
+SiMRunePanel     1.0 SiMRunePanel.qml
+SiMBreathingMode 1.0 SiMBreathingMode.qml
+RuneChip         1.0 RuneChip.qml

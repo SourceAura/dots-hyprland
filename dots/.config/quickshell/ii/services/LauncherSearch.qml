@@ -8,6 +8,7 @@ import Qt.labs.folderlistmodel
 import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
+import "sim" as SiM
 
 Singleton {
     id: root
@@ -170,6 +171,55 @@ Singleton {
         if (root.query == "")
             return [];
 
+        // ── SiM Sovereign NLU Intercept ──
+        const combinedQuery = SiM.SiMSovereign.getCombinedCommand ? SiM.SiMSovereign.getCombinedCommand(root.query) : root.query;
+        const hasLockedRunes = SiM.SiMSovereign.lockedChips !== undefined && SiM.SiMSovereign.lockedChips.some(c => !c.isStyle);
+        const isSimCommand = SiM.SiMSovereign.processCommand !== undefined && (
+            hasLockedRunes ||
+            combinedQuery.startsWith("moon") ||
+            combinedQuery.startsWith("sun") ||
+            combinedQuery.startsWith("shikai") ||
+            combinedQuery.startsWith("bankai") ||
+            combinedQuery.startsWith("conduit") ||
+            combinedQuery.startsWith("atelier") ||
+            combinedQuery.startsWith("grimoire") ||
+            combinedQuery.startsWith("ori") ||
+            combinedQuery.startsWith("simcomm") ||
+            combinedQuery.startsWith("nmap") ||
+            combinedQuery.startsWith("nuclei") ||
+            combinedQuery.startsWith("subfinder") ||
+            combinedQuery.startsWith("httpx")
+        );
+
+        const simResultObject = isSimCommand ? resultComp.createObject(null, {
+            name: combinedQuery,
+            verb: Translation.tr("Execute"),
+            type: Translation.tr("SiM Sovereign"),
+            fontType: LauncherSearchResult.FontType.Monospace,
+            iconName: 'brightness_low', // concentric breathing orb sigil
+            iconType: LauncherSearchResult.IconType.Material,
+            execute: () => {
+                const intent = SiM.SiMSovereign.processCommand(combinedQuery);
+                if (intent.handled) {
+                    GlobalStates.overviewOpen = false;
+                } else {
+                    GlobalStates.overviewOpen = false;
+                    const trimmed = combinedQuery.trim();
+                    if (trimmed === "conduit" || trimmed === "atelier" || trimmed === "grimoire" || trimmed === "ori" || trimmed === "simcomm") {
+                        SiM.SiMSovereign.toggleRom(trimmed);
+                    } else {
+                        SiM.SiMSovereign.toggleRom("conduit");
+                        if (SiM.SiMSovereign.runNativeCommand) {
+                            SiM.SiMSovereign.runNativeCommand(trimmed);
+                        }
+                    }
+                }
+                if (SiM.SiMSovereign.lockedChips !== undefined) {
+                    SiM.SiMSovereign.lockedChips = [];
+                }
+            }
+        }) : null;
+
         ///////////// Special cases ///////////////
         if (root.query.startsWith(Config.options.search.prefix.clipboard)) {
             // Clipboard
@@ -325,6 +375,9 @@ Singleton {
 
         //////// Prioritized by prefix /////////
         let result = [];
+        if (simResultObject !== null) {
+            result.push(simResultObject);
+        }
         const startsWithNumber = /^\d/.test(root.query);
         const startsWithMathPrefix = root.query.startsWith(Config.options.search.prefix.math);
         const startsWithShellCommandPrefix = root.query.startsWith(Config.options.search.prefix.shellCommand);
