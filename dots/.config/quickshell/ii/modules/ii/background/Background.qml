@@ -17,6 +17,8 @@ import Quickshell.Hyprland
 import qs.modules.ii.background.widgets
 import qs.modules.ii.background.widgets.clock
 import qs.modules.ii.background.widgets.weather
+import QtQuick.Effects
+import "../../../services/sim" as SiM
 
 Variants {
     id: root
@@ -274,6 +276,66 @@ Variants {
                         scaledScreenHeight: bgRoot.screen.height
                         wallpaperScale: 1
                         wallpaperSafetyTriggered: bgRoot.wallpaperSafetyTriggered
+                    }
+                }
+
+                // ── SiM ROM Desktop Widget ──────────────────────────────────────────
+                // Transforms ROM overlays into interactive, premium desktop widgets!
+                FadeLoader {
+                    id: _simRomWidgetLoader
+                    shown: SiM.SiMSovereign.activeRom !== ""
+                    fade: true
+                    
+                    sourceComponent: Rectangle {
+                        id: _romWidgetContainer
+                        
+                        // Default premium dimensions for desktop widgets
+                        implicitWidth: 800
+                        implicitHeight: 480
+                        width: implicitWidth
+                        height: implicitHeight
+                        
+                        // Centered default position on the screen
+                        x: (bgRoot.screen.width - width) / 2
+                        y: (bgRoot.screen.height - height) / 2
+                        
+                        radius: Appearance.rounding.normal
+                        color: Qt.rgba(0.016, 0.016, 0.020, 0.72) // Glassmorphic cyber-darkness
+                        border.color: Qt.rgba(SiM.SiMSovereign.prismaticColor.r, SiM.SiMSovereign.prismaticColor.g, SiM.SiMSovereign.prismaticColor.b, 0.45)
+                        border.width: 1.5
+                        
+                        Behavior on border.color { ColorAnimation { duration: 250 } }
+                        
+                        // Advanced GPU-accelerated glassmorphism blur and shadow HSL pulsing
+                        layer.enabled: true
+                        layer.effect: MultiEffect {
+                            blurEnabled: true
+                            blur: 0.6
+                            shadowEnabled: true
+                            shadowColor: Qt.rgba(SiM.SiMSovereign.prismaticColor.r, SiM.SiMSovereign.prismaticColor.g, SiM.SiMSovereign.prismaticColor.b, 0.25)
+                            shadowBlur: 0.8
+                            shadowVerticalOffset: 4
+                        }
+                        
+                        // Drag handler zone on the top header of the widget container
+                        Item {
+                            id: _headerZone
+                            width: parent.width
+                            height: 28
+                            z: 5
+                            
+                            DragHandler {
+                                target: _romWidgetContainer
+                            }
+                        }
+                        
+                        // The actual loaded ROM component
+                        Loader {
+                            anchors.fill: parent
+                            anchors.margins: 2
+                            active: _simRomWidgetLoader.shown
+                            source: SiM.SiMSovereign.romPath
+                        }
                     }
                 }
             }

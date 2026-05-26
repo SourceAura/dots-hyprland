@@ -76,15 +76,10 @@ ShellRoot {
         onPressed: root.cyclePanelFamily()
     }
 
-    // ── SiM ROM overlay ──────────────────────────────────────────────────
-    // Loads the active ROM as a WlrLayer.Overlay panel.
-    // Active only when a ROM is open — zero cost otherwise.
-    Loader {
-        id: _simRomLoader
-        active:  SiM.SiMSovereign.activeRom !== ""
-        source:  SiM.SiMSovereign.romPath
-        visible: active
-    }
+    // ── SiM ROM Desktop Widget ──────────────────────────────────────────
+    // Deactivated screen-level overlay loader.
+    // Active ROMs are now loaded directly as desktop background widgets.
+
 
     // ── SiM IPC Handler ──────────────────────────────────────────────────
     IpcHandler {
