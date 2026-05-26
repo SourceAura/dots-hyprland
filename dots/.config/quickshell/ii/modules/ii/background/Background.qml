@@ -286,34 +286,38 @@ Variants {
                     shown: SiM.SiMSovereign.activeRom !== ""
                     fade: true
                     
+                    // Center and size the container on the screen geometry to prevent layout clipping
+                    width: 800
+                    height: 480
+                    x: (bgRoot.width - width) / 2
+                    y: (bgRoot.height - height) / 2
+                    
+                    onStatusChanged: {
+                        console.log("[SiM ROM Loader] Outer status changed:", status)
+                    }
+                    
+                    onShownChanged: {
+                        console.log("[SiM ROM Loader] Outer shown changed:", shown, "activeRom:", SiM.SiMSovereign.activeRom)
+                    }
+                    
                     sourceComponent: Rectangle {
                         id: _romWidgetContainer
-                        
-                        // Default premium dimensions for desktop widgets
-                        implicitWidth: 800
-                        implicitHeight: 480
-                        width: implicitWidth
-                        height: implicitHeight
-                        
-                        // Centered default position on the screen
-                        x: (bgRoot.screen.width - width) / 2
-                        y: (bgRoot.screen.height - height) / 2
+                        anchors.fill: parent
                         
                         radius: Appearance.rounding.normal
-                        color: Qt.rgba(0.016, 0.016, 0.020, 0.72) // Glassmorphic cyber-darkness
-                        border.color: Qt.rgba(SiM.SiMSovereign.prismaticColor.r, SiM.SiMSovereign.prismaticColor.g, SiM.SiMSovereign.prismaticColor.b, 0.45)
-                        border.width: 1.5
+                        color: Qt.rgba(0.016, 0.016, 0.020, 0.95) // Solid premium dark glass background
+                        border.color: Qt.rgba(SiM.SiMSovereign.prismaticColor.r, SiM.SiMSovereign.prismaticColor.g, SiM.SiMSovereign.prismaticColor.b, 0.9)
+                        border.width: 2.0
                         
                         Behavior on border.color { ColorAnimation { duration: 250 } }
                         
-                        // Advanced GPU-accelerated glassmorphism blur and shadow HSL pulsing
+                        // Standard drop shadow and layout styling to avoid rendering issues on older systems
                         layer.enabled: true
                         layer.effect: MultiEffect {
-                            blurEnabled: true
-                            blur: 0.6
+                            blurEnabled: false
                             shadowEnabled: true
-                            shadowColor: Qt.rgba(SiM.SiMSovereign.prismaticColor.r, SiM.SiMSovereign.prismaticColor.g, SiM.SiMSovereign.prismaticColor.b, 0.25)
-                            shadowBlur: 0.8
+                            shadowColor: Qt.rgba(SiM.SiMSovereign.prismaticColor.r, SiM.SiMSovereign.prismaticColor.g, SiM.SiMSovereign.prismaticColor.b, 0.5)
+                            shadowBlur: 0.5
                             shadowVerticalOffset: 4
                         }
                         
@@ -321,20 +325,25 @@ Variants {
                         Item {
                             id: _headerZone
                             width: parent.width
-                            height: 28
+                            height: 36
                             z: 5
                             
                             DragHandler {
-                                target: _romWidgetContainer
+                                target: _simRomWidgetLoader
                             }
                         }
                         
                         // The actual loaded ROM component
                         Loader {
+                            id: _innerRomLoader
                             anchors.fill: parent
-                            anchors.margins: 2
+                            anchors.margins: 4
                             active: _simRomWidgetLoader.shown
                             source: SiM.SiMSovereign.romPath
+                            
+                            onStatusChanged: {
+                                console.log("[SiM ROM Loader] Inner ROM status changed:", status, "Source:", source)
+                            }
                         }
                     }
                 }
